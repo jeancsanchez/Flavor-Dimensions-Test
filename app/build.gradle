@@ -17,14 +17,45 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation 'com.android.support:appcompat-v7:25.4.0'
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    flavorDimensions("product", "mode")
+    productFlavors {
+        app1 {
+            dimension "product"
+            applicationIdSuffix = ".app1"
+        }
+
+        app2 {
+            dimension "product"
+            applicationIdSuffix = ".app2"
+        }
+
+        mock {
+            dimension "mode"
+        }
+
+        prod {
+            dimension "mode"
+        }
+    }
+
+    android.variantFilter { variant ->
+        variant.getFlavors().each { flavor ->
+            if (variant.buildType.name == "release" &&
+                    flavor.name.contains("mock") &&
+                    flavor.dimension == "mode") {
+                variant.setIgnore(true)
+            }
+        }
+    }
+
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+            exclude group: 'com.android.support', module: 'support-annotations'
+        })
+        implementation 'com.android.support:appcompat-v7:25.4.0'
+        testImplementation 'junit:junit:4.12'
+        implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    }
 }
