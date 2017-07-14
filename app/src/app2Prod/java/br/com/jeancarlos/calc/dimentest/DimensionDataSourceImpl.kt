@@ -1,7 +1,7 @@
 package br.com.jeancarlos.calc.dimentest
 
 /**
- * This class represents a [DimensionDataSource] mock implementation
+ * This class represents a [DimensionDataSource] production implementation
  * @author Jean Carlos
  * @since 14/07/17
  */
