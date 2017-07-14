@@ -25,10 +25,6 @@ android {
             dimension "product"
         }
 
-        app2 {
-            dimension "product"
-        }
-
         mock {
             dimension "mode"
         }
